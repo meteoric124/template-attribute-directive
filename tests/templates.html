@@ -1,0 +1,35 @@
+<template name="SingleTemplate1">
+    <div fooDirective="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
+</template>
+
+<template name="SingleTemplate2">
+    <div notFooDirective="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
+</template>
+
+<template name="NoNewScopeTemplate">
+    <div notFooDirective="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
+</template>
+
+<template name="DirectiveAtBottom_TopHaveRootDOMElement">
+    <div>
+        {{> SingleTemplate1}}
+        {{> SingleTemplate2}}
+    </div>
+</template>
+
+<template name="DirectiveAtBottomAllSameScope">
+    {{> NoNewScopeTemplate}}
+    {{> NoNewScopeTemplate}}
+</template>
+
+<template name="DirectiveAtBottom_TopHaveNORootDOMElement">
+    {{> SingleTemplate1}}
+    {{> SingleTemplate2}}
+</template>
+
+<template name="DirectiveAtTop">
+    <div asdfDirective="pastorMaldonadoIsGoodRiddance">
+        {{> SingleTemplate1}}
+        {{> SingleTemplate2}}
+    </div>
+</template>

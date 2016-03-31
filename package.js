@@ -27,8 +27,17 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use('ecmascript');
-  api.use('sanjo:jasmine@0.20.3');
+  api.use([
+    'ecmascript',
+    'sanjo:jasmine@1.0.0-rc.3',
+    'templating',
+    'tracker',
+    'underscore'
+  ]);
   api.use('jandres:template-attribute-directive');
-  api.mainModule('template-attribute-directive-tests.js');
+
+  api.addFiles([
+      'tests/templates.html'
+  ], 'client');
+  api.mainModule('template-attribute-directive-tests.js', 'client');
 });

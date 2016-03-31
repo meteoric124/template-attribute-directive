@@ -1,30 +1,9 @@
-let noop = () => undefined;
-
-let TemplateAttributeDirectiveTypes = [];
-
-export class TemplateAttributeType {
-    constructor(name, options = {}) {
-        this.name = name;
-        this.$preLink = options.$preLink || noop;
-        this.$postLink = options.$postLink || noop;
-
-        TemplateAttributeDirectiveTypes.push(this);
-
-        this._instances = [];
-    }
-
-    addInstance(instance) {
-        // todo: Place this in $postLink, so we can access the state of element then.
-        let $element = $(`[attribute_directive_element_id=${instance.$element_id}]`);
-        let $attrs = {};
-        for (var i = 0, atts = $element[0].attributes, n = atts.length; i < n; i++){
-            $attrs[atts[i].nodeName] = atts[i].nodeValue;
-        }
-        $(instance).on('$preLink', this.$preLink.bind(instance, this.$scope, $element, $attrs));
-        $(instance).on('$postLink', this.$postLink.bind(instance, this.$scope, $element, $attrs));
-        this._instances.push(instance);
-    }
-}
+import { Template } from 'meteor/templating';
+import {
+    resetTemplateAttributeDirectiveTypes,
+    TemplateAttributeDirectiveTypes,
+    TemplateAttributeDirectiveType
+} from './lib/template-attribute-directive-type';
 
 Template.onCreated(function() {
 });
@@ -64,7 +43,12 @@ Template.onRendered(function() {
     $(this).on('$preLink', function() {
         TemplateAttributeDirectiveTypes.forEach(directiveType => {
             directiveType._instances.filter(d => d._templateInstance == this).forEach(d => {
-                $(d).triggerHandler('$preLink');
+                let $element = $(`[attribute_directive_element_id=${d.$element_id}]`);
+                let $attrs = {};
+                for (var i = 0, atts = $element[0].attributes, n = atts.length; i < n; i++){
+                    $attrs[atts[i].nodeName] = atts[i].nodeValue;
+                }
+                directiveType.$preLink.call(d, d.$scope, $element, $attrs);
             });
         });
     });
@@ -72,7 +56,12 @@ Template.onRendered(function() {
     $(this).on('$postLink', function() {
         TemplateAttributeDirectiveTypes.forEach(directiveType => {
             directiveType._instances.filter(d => d._templateInstance == this).forEach(d => {
-                $(d).triggerHandler('$postLink');
+                let $element = $(`[attribute_directive_element_id=${d.$element_id}]`);
+                let $attrs = {};
+                for (var i = 0, atts = $element[0].attributes, n = atts.length; i < n; i++){
+                    $attrs[atts[i].nodeName] = atts[i].nodeValue;
+                }
+                directiveType.$postLink.call(d, d.$scope, $element, $attrs);
             });
         });
     });
@@ -83,3 +72,10 @@ Template.onDestroyed(function() {
         directiveType._instances = directiveType._instances.filter(d => d._templateInstance != this);
     });
 });
+
+// Package exports.
+export {
+    resetTemplateAttributeDirectiveTypes,  // For tests.
+    TemplateAttributeDirectiveTypes,  // For tests.
+    TemplateAttributeDirectiveType
+};
