@@ -29,8 +29,8 @@ describe('template-attribute-directive', function() {
         });
 
         it ('will be the template in which attribute-directive will be nested', function() {
-            expect(this.tadt._instances.length).toBe(1);
-            expect(this.tadt._instances[0].$scope).toBe(this.view._templateInstance.$scope);
+            expect(Object.keys(this.tadt._instances).length).toBe(1);
+            expect(this.tadt._instances[Object.keys(this.tadt._instances)[0]].$scope).toBe(this.view._templateInstance.$scope);
         });
 
         afterEach(function() {
@@ -49,10 +49,10 @@ describe('template-attribute-directive', function() {
         });
 
         it ('will be attached by attribute-directive', function() {
-            expect(this.tadtFoo._instances.length).toBe(0);
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(0);
 
-            expect(this.tadtNotFoo._instances.length).toBe(1);
-            expect(this.tadtNotFoo._instances[0].$scope).toBe(this.view._templateInstance.$scope);
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(this.view._templateInstance.$scope);
         });
 
         afterEach(function() {
@@ -81,11 +81,11 @@ describe('template-attribute-directive', function() {
             expect(SingleTemplate1Instance).toBeTruthy('SingleTemplate1 was not rendered.');
             expect(SingleTemplate2Instance).toBeTruthy('SingleTemplate2 was not rendered.');
 
-            expect(this.tadtFoo._instances.length).toBe(1);
-            expect(this.tadtFoo._instances[0].$scope).toBe(SingleTemplate1Instance.$scope);
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(1);
+            expect(this.tadtFoo._instances[Object.keys(this.tadtFoo._instances)[0]].$scope).toBe(SingleTemplate1Instance.$scope);
 
-            expect(this.tadtNotFoo._instances.length).toBe(1);
-            expect(this.tadtNotFoo._instances[0].$scope).toBe(SingleTemplate2Instance.$scope);
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(SingleTemplate2Instance.$scope);
         });
 
         afterEach(function() {
@@ -114,11 +114,11 @@ describe('template-attribute-directive', function() {
             expect(SingleTemplate1Instance).toBeTruthy('SingleTemplate1 was not rendered.');
             expect(SingleTemplate2Instance).toBeTruthy('SingleTemplate2 was not rendered.');
 
-            expect(this.tadtFoo._instances.length).toBe(1);
-            expect(this.tadtFoo._instances[0].$scope).toBe(SingleTemplate1Instance.$scope);
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(1);
+            expect(this.tadtFoo._instances[Object.keys(this.tadtFoo._instances)[0]].$scope).toBe(SingleTemplate1Instance.$scope);
 
-            expect(this.tadtNotFoo._instances.length).toBe(1);
-            expect(this.tadtNotFoo._instances[0].$scope).toBe(SingleTemplate2Instance.$scope);
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(SingleTemplate2Instance.$scope);
         });
 
         afterEach(function() {
@@ -144,13 +144,13 @@ describe('template-attribute-directive', function() {
             expect(NoNewScopeTemplates[0]).toBeTruthy('SingleTemplate1 was not rendered.');
             expect(NoNewScopeTemplates[1]).toBeTruthy('SingleTemplate2 was not rendered.');
 
-            expect(this.tadtNotFoo._instances.length).toBe(2);
-            expect(this.tadtNotFoo._instances[0]._templateInstance).not.toBe(this.view._templateInstance);
-            expect(this.tadtNotFoo._instances[1]._templateInstance).not.toBe(this.view._templateInstance);
-            expect(this.tadtNotFoo._instances[0]._templateInstance).toBe(NoNewScopeTemplates[0]);
-            expect(this.tadtNotFoo._instances[0].$scope).toBe(NoNewScopeTemplates[0].$scope);
-            expect(this.tadtNotFoo._instances[1]._templateInstance).toBe(NoNewScopeTemplates[1]);
-            expect(this.tadtNotFoo._instances[1].$scope).toBe(NoNewScopeTemplates[1].$scope);
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(2);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].templateInstance).not.toBe(this.view.templateInstance);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[1]].templateInstance).not.toBe(this.view.templateInstance);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].templateInstance).toBe(NoNewScopeTemplates[0]);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(NoNewScopeTemplates[0].$scope);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[1]].templateInstance).toBe(NoNewScopeTemplates[1]);
+            expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[1]].$scope).toBe(NoNewScopeTemplates[1].$scope);
         });
 
         afterEach(function() {
@@ -177,10 +177,10 @@ describe('template-attribute-directive', function() {
             expect(SingleTemplate1Instance).toBeTruthy('SingleTemplate1 was not rendered.');
             expect(SingleTemplate2Instance).toBeTruthy('SingleTemplate2 was not rendered.');
 
-            expect(this.tadtasdf._instances.length).toBe(1);
-            expect(this.tadtasdf._instances[0].$scope).not.toBe(SingleTemplate1Instance.$scope);
-            expect(this.tadtasdf._instances[0].$scope).not.toBe(SingleTemplate2Instance.$scope);
-            expect(this.tadtasdf._instances[0].$scope).toBe(this.view._templateInstance.$scope);
+            expect(Object.keys(this.tadtasdf._instances).length).toBe(1);
+            expect(this.tadtasdf._instances[Object.keys(this.tadtasdf._instances)[0]].$scope).not.toBe(SingleTemplate1Instance.$scope);
+            expect(this.tadtasdf._instances[Object.keys(this.tadtasdf._instances)[0]].$scope).not.toBe(SingleTemplate2Instance.$scope);
+            expect(this.tadtasdf._instances[Object.keys(this.tadtasdf._instances)[0]].$scope).toBe(this.view._templateInstance.$scope);
         });
 
         afterEach(function() {
