@@ -7,6 +7,7 @@ import {
 import {
     TemplateAttributeDirectiveInstance
 } from './lib/template-attribute-directive-instance';
+import { toCamelCase, toSnakeCase } from './lib/utility';
 
 Template.onCreated(function() {
     this.$$attributeDirectivesHash = {};
@@ -14,7 +15,8 @@ Template.onCreated(function() {
 
 Template.onRendered(function() {
     TemplateAttributeDirectiveTypes.forEach(directiveType => {
-        let $element = this.$(`[${directiveType.name}]`);
+        let directiveNameSnakeCase = toSnakeCase(directiveType.name);  // Assumed that directiveType.name is cameCase.
+        let $element = this.$(`[${directiveNameSnakeCase}]`);
         if ($element.length) {
             let attribute_directive_id = $element.attr('attribute_directive_id');
             if (!attribute_directive_id) {
@@ -52,7 +54,7 @@ Template.onRendered(function() {
             let $element = $(`[attribute_directive_id=${d.id}]`);
             let $attrs = {};
             for (var i = 0, atts = $element[0].attributes, n = atts.length; i < n; i++){
-                $attrs[atts[i].nodeName] = atts[i].nodeValue;
+                $attrs[toCamelCase(atts[i].nodeName)] = atts[i].nodeValue;
             }
             d.type.$preLink.call(d, d.$scope, $element, $attrs);
         }
@@ -65,7 +67,7 @@ Template.onRendered(function() {
             let $element = $(`[attribute_directive_id=${d.id}]`);
             let $attrs = {};
             for (var i = 0, atts = $element[0].attributes, n = atts.length; i < n; i++) {
-                $attrs[atts[i].nodeName] = atts[i].nodeValue;
+                $attrs[toCamelCase(atts[i].nodeName)] = atts[i].nodeValue;
             }
             d.type.$postLink.call(d, d.$scope, $element, $attrs);
         }
