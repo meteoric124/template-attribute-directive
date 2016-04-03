@@ -1,6 +1,6 @@
 Package.describe({
   name: 'jandres:template-attribute-directive',
-  version: '0.1.0-alpha3',
+  version: '0.1.0-alpha4',
   // Brief, one-line summary of the package.
   summary: 'Basic implementation of angular template-attribute-directive in blaze.',
   // URL to the Git repository containing the source code for this package.
@@ -17,7 +17,7 @@ Package.onUse(function(api) {
   ]);
 
   api.use([
-    "jandres:template-scope@0.1.0-alpha14",
+    "jandres:template-scope@0.1.0-alpha15",
     'underscore',
     'templating',
     'jquery'
