@@ -1,8 +1,8 @@
-import { noop } from "./utility";
+import { noop } from "./../lib/utility";
 import {
     TemplateAttributeDirectiveTypes,
     resetTemplateAttributeDirectiveTypes,
-    TemplateAttributeDirectiveType } from "./template-attribute-directive-type";
+    TemplateAttributeDirectiveType } from "./../lib/template-attribute-directive-type";
 
 describe('TemplateAttributeDirectiveType class test', function() {
     describe('constructor test', function() {

@@ -1,9 +1,9 @@
-import './lib/template-attribute-directive-type.test.js';
-
+import { Blaze } from 'meteor/blaze';
+import { $ } from 'meteor/jquery';
 import {
     resetTemplateAttributeDirectiveTypes,
     TemplateAttributeDirectiveType
-} from 'meteor/jandres:template-attribute-directive';
+} from './../template-attribute-directive';
 
 import { Template } from 'meteor/templating';
 import { Tracker } from 'meteor/tracker';
@@ -24,7 +24,7 @@ describe('template-attribute-directive', function() {
         beforeEach(function() {
             resetTemplateAttributeDirectiveTypes();
             this.tadt = new TemplateAttributeDirectiveType('fooDirective');
-            this.view = Blaze.render(Template.SingleTemplate1, document.body);
+            this.view = Blaze.render(Template.SingleTemplate1, $('body').get(0));
             Tracker.flush();
         });
 

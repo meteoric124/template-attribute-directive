@@ -1,6 +1,6 @@
 Package.describe({
   name: 'jandres:template-attribute-directive',
-  version: '0.1.0-beta.1',
+  version: '0.1.0-beta.2',
   // Brief, one-line summary of the package.
   summary: 'Basic implementation of angular template-attribute-directive in blaze.',
   // URL to the Git repository containing the source code for this package.
@@ -10,34 +10,43 @@ Package.describe({
   documentation: 'README.md'
 });
 
+var package_client_dependencies = [
+  "jandres:template-scope@=0.1.0-beta.3",
+  'underscore',
+  'templating',
+  'jquery'
+];
+
 Package.onUse(function(api) {
-  api.versionsFrom('1.3');
+  api.versionsFrom('1.3.2.4');
   api.use([
     'ecmascript'
   ]);
 
-  api.use([
-    "jandres:template-scope@0.1.0-beta.1",
-    'underscore',
-    'templating',
-    'jquery'
-  ], 'client');
+  api.use(package_client_dependencies, 'client');
 
   api.mainModule('template-attribute-directive.js', 'client');
 });
 
 Package.onTest(function(api) {
+  api.use('jandres:template-attribute-directive', 'client');
+
+  // Testing packages.
+  api.use([
+    'sanjo:jasmine@1.0.1',
+    'velocity:html-reporter'
+  ]);
+
+  api.use(package_client_dependencies, 'client');
+
   api.use([
     'ecmascript',
-    'sanjo:jasmine@1.0.0-rc.3',
-    'templating',
-    'tracker',
-    'underscore'
-  ]);
-  api.use('jandres:template-attribute-directive');
+    'tracker'
+  ], 'client');
 
   api.addFiles([
-      'tests/templates.html'
+    'tests/templates.html',
+    'tests/template-attribute-directive-type.test.js',
+    'tests/template-attribute-directive-tests.js'
   ], 'client');
-  api.mainModule('template-attribute-directive-tests.js', 'client');
 });

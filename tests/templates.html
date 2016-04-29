@@ -1,13 +1,13 @@
 <template name="SingleTemplate1">
-    <div fooDirective="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
+    <div foo-directive="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
 </template>
 
 <template name="SingleTemplate2">
-    <div notFooDirective="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
+    <div not-foo-directive="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
 </template>
 
 <template name="NoNewScopeTemplate">
-    <div notFooDirective="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
+    <div not-foo-directive="watsup" class="forza-ferrari">petronas-mercedez is making f1 boring</div>
 </template>
 
 <template name="DirectiveAtBottom_TopHaveRootDOMElement">
@@ -28,7 +28,7 @@
 </template>
 
 <template name="DirectiveAtTop">
-    <div asdfDirective="pastorMaldonadoIsGoodRiddance">
+    <div asdf-directive="pastorMaldonadoIsGoodRiddance">
         {{> SingleTemplate1}}
         {{> SingleTemplate2}}
     </div>

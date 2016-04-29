@@ -15,7 +15,7 @@ Template.onCreated(function() {
 
 Template.onRenderedFirst(function() {
     TemplateAttributeDirectiveTypes.forEach(directiveType => {
-        let directiveNameSnakeCase = toSnakeCase(directiveType.name);  // Assumed that directiveType.name is cameCase.
+        let directiveNameSnakeCase = toSnakeCase(directiveType.name);  // Assumed that directiveType.name is camelCase.
         let $element = this.$(`[${directiveNameSnakeCase}]`);
         if ($element.length) {
             let attribute_directive_id = $element.attr('attribute_directive_id');
