@@ -1,6 +1,6 @@
 Package.describe({
-  name: 'jandres:template-attribute-directive',
-  version: '0.1.0-beta.2',
+  name: 'meteoric124:template-attribute-directive',
+  version: '0.1.0-beta.3',
   // Brief, one-line summary of the package.
   summary: 'Basic implementation of angular template-attribute-directive in blaze.',
   // URL to the Git repository containing the source code for this package.
