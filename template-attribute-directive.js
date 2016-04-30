@@ -13,6 +13,13 @@ import { toSnakeCase } from './lib/utility';
 
 Template.onCreated(function() {
     this.$$attributeDirectivesHash = {};
+    this.forEachAttributeDirective = fn => {
+        for (let attributeDirectiveId in this.$$attributeDirectivesHash) {
+            for (let d of this.$$attributeDirectivesHash[attributeDirectiveId]) {
+                fn(d, attributeDirectiveId);
+            }
+        }
+    }
 });
 
 Template.onRenderedFirst(function() {
@@ -53,32 +60,26 @@ Template.onRenderedFirst(function() {
     });
 
     $(this).on('$preLink', function() {
-        for (let attributeDirectiveId in this.$$attributeDirectivesHash) {
-            for (let d of this.$$attributeDirectivesHash[attributeDirectiveId]) {
-                let $element = $(`[uid="${d.id}"]`);
-                let $attrs = d.$attrs();
-                d.type.$preLink.call(d, d.$scope, $element, $attrs);
-            }
-        }
+        this.forEachAttributeDirective(d => {
+            let $element = $(`[uid="${d.id}"]`);
+            let $attrs = d.$attrs();
+            d.type.$preLink.call(d, d.$scope, $element, $attrs);
+        });
     });
 
     $(this).on('$postLink', function() {
-        for (let attributeDirectiveId in this.$$attributeDirectivesHash) {
-            for (let d of this.$$attributeDirectivesHash[attributeDirectiveId]) {
-                let $element = $(`[uid="${d.id}"]`);
-                let $attrs = d.$attrs();
-                d.type.$postLink.call(d, d.$scope, $element, $attrs);
-            }
-        }
+        this.forEachAttributeDirective(d => {
+            let $element = $(`[uid="${d.id}"]`);
+            let $attrs = d.$attrs();
+            d.type.$postLink.call(d, d.$scope, $element, $attrs);
+        });
     });
 });
 
 Template.onDestroyed(function() {
-    for (let attributeDirectiveId in this.$$attributeDirectivesHash) {
-        for (let d of this.$$attributeDirectivesHash[attributeDirectiveId]) {
-            delete d.type._instances[attributeDirectiveId];
-        }
-    }
+    this.forEachAttributeDirective((d, attributeDirectiveId) => {
+        delete d.type._instances[attributeDirectiveId];
+    });
 
     delete this.$$attributeDirectivesHash;
 });

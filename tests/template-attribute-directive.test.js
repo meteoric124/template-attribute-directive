@@ -31,10 +31,14 @@ describe('template-attribute-directive', function() {
         it ('will be the template in which attribute-directive will be nested', function() {
             expect(Object.keys(this.tadt._instances).length).toBe(1, 'No fooDirective instance was created.');
             expect(this.tadt._instances[Object.keys(this.tadt._instances)[0]].$scope).toBe(this.view._templateInstance.$scope);
+
+            Blaze.remove(this.view);
+            delete this.tadt;
         });
 
-        afterEach(function() {
+        it ('will delete the template attribute instance associated to it when destroyed', function() {
             Blaze.remove(this.view);
+            expect(Object.keys(this.tadt._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
             delete this.tadt;
         });
     });
@@ -53,10 +57,18 @@ describe('template-attribute-directive', function() {
 
             expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1);
             expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(this.view._templateInstance.$scope);
+
+            Blaze.remove(this.view);
+            delete this.tadtFoo;
+            delete this.tadtNotFoo;
         });
 
-        afterEach(function() {
+        it ('will delete the template attribute instance associated to it when destroyed', function() {
             Blaze.remove(this.view);
+
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(0, 'NotfooDirective instances was not deleted during template destruction.');
+
             delete this.tadtFoo;
             delete this.tadtNotFoo;
         });
@@ -86,12 +98,25 @@ describe('template-attribute-directive', function() {
 
             expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1);
             expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(SingleTemplate2Instance.$scope);
+
+            Blaze.remove(this.view);
         });
 
-        afterEach(function() {
+        it ('will delete the template attribute instance associated to it when destroyed', function() {
+            let SingleTemplate1Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate1')[0];
+            let SingleTemplate2Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate2')[0];
+
+            Blaze.remove(SingleTemplate1Instance.view);
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1, 'NotfooDirective instances is not meant to be deleted.');
+
+            Blaze.remove(SingleTemplate2Instance.view);
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(0, 'NotfooDirective instances was not deleted during template destruction.');
+
             Blaze.remove(this.view);
-            delete this.tadtFoo;
-            delete this.tadtNotFoo;
         });
     });
 
@@ -119,12 +144,25 @@ describe('template-attribute-directive', function() {
 
             expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1);
             expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(SingleTemplate2Instance.$scope);
+
+            Blaze.remove(this.view);
         });
 
-        afterEach(function() {
+        it ('will delete the template attribute instance associated to it when destroyed', function() {
+            let SingleTemplate1Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate1')[0];
+            let SingleTemplate2Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate2')[0];
+
+            Blaze.remove(SingleTemplate1Instance.view);
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1, 'NotfooDirective instances is not meant to be deleted.');
+
+            Blaze.remove(SingleTemplate2Instance.view);
+            expect(Object.keys(this.tadtFoo._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(0, 'NotfooDirective instances was not deleted during template destruction.');
+
             Blaze.remove(this.view);
-            delete this.tadtFoo;
-            delete this.tadtNotFoo;
         });
     });
 
@@ -151,11 +189,20 @@ describe('template-attribute-directive', function() {
             expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[0]].$scope).toBe(NoNewScopeTemplates[0].$scope);
             expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[1]].templateInstance).toBe(NoNewScopeTemplates[1]);
             expect(this.tadtNotFoo._instances[Object.keys(this.tadtNotFoo._instances)[1]].$scope).toBe(NoNewScopeTemplates[1].$scope);
+
+            Blaze.remove(this.view);
         });
 
-        afterEach(function() {
+        it ('will delete the template attribute instance associated to it when destroyed', function() {
+            let NoNewScopeTemplates =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.NoNewScopeTemplate');
+
+            Blaze.remove(NoNewScopeTemplates[0].view);
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(1, 'NotfooDirective instances is not meant to be deleted.');
+            Blaze.remove(NoNewScopeTemplates[1].view);
+            expect(Object.keys(this.tadtNotFoo._instances).length).toBe(0, 'NotfooDirective instances is not meant to be deleted.');
+
             Blaze.remove(this.view);
-            delete this.tadtNotFoo;
         });
     });
 
@@ -181,11 +228,24 @@ describe('template-attribute-directive', function() {
             expect(this.tadtasdf._instances[Object.keys(this.tadtasdf._instances)[0]].$scope).not.toBe(SingleTemplate1Instance.$scope);
             expect(this.tadtasdf._instances[Object.keys(this.tadtasdf._instances)[0]].$scope).not.toBe(SingleTemplate2Instance.$scope);
             expect(this.tadtasdf._instances[Object.keys(this.tadtasdf._instances)[0]].$scope).toBe(this.view._templateInstance.$scope);
+
+            Blaze.remove(this.view);
         });
 
-        afterEach(function() {
+        it ('will delete the template attribute instance associated to it when destroyed', function() {
+            let SingleTemplate1Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate1')[0];
+            let SingleTemplate2Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate2')[0];
+
+            Blaze.remove(SingleTemplate1Instance.view);
+            expect(Object.keys(this.tadtasdf._instances).length).toBe(1, 'fooDirective instances was not deleted during template destruction.');
+
+            Blaze.remove(SingleTemplate2Instance.view);
+            expect(Object.keys(this.tadtasdf._instances).length).toBe(1, 'fooDirective instances was not deleted during template destruction.');
+
             Blaze.remove(this.view);
-            delete this.tadtasdf;
+            expect(Object.keys(this.tadtasdf._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
         });
     });
 
@@ -222,22 +282,30 @@ describe('template-attribute-directive', function() {
             let directiveTwoInstance = this.tadt_directiveTwo._instances[Object.keys(this.tadt_directiveTwo._instances)[0]];
             expect(directiveOneInstance.$scope).toBe(this.view._templateInstance.$scope);
             expect(directiveTwoInstance.$scope).toBe(this.view._templateInstance.$scope);
+            Blaze.remove(this.view);
         });
 
         it ('will call $preLink for both template attributes.', function() {
             expect(this.tadt_directiveOne_preLinked).toBeTruthy('directive one did not call $preLink');
             expect(this.tadt_directiveTwo_preLinked).toBeTruthy('directive two did not call $preLink');
+            Blaze.remove(this.view);
         });
 
         it ('will call $postLink for both template attributes.', function() {
             expect(this.tadt_directiveOne_postLinked).toBeTruthy('directive one did not call $postLink');
             expect(this.tadt_directiveTwo_postLinked).toBeTruthy('directive two did not call $postLink');
+            Blaze.remove(this.view);
         });
 
-        afterEach(function() {
+        it ('will delete the template attribute instance associated to it when destroyed', function() {
+            let SingleTemplate1Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate1')[0];
+            let SingleTemplate2Instance =
+                this.view._templateInstance.children().filter(t => t.view.name === 'Template.SingleTemplate2')[0];
+
             Blaze.remove(this.view);
-            delete this.tadt_directiveOne;
-            delete this.tadt_directiveTwo;
+            expect(Object.keys(this.tadt_directiveOne._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
+            expect(Object.keys(this.tadt_directiveTwo._instances).length).toBe(0, 'fooDirective instances was not deleted during template destruction.');
         });
     });
 });
