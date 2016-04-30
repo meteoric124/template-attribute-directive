@@ -9,7 +9,7 @@ import {
 import {
     TemplateAttributeDirectiveInstance
 } from './lib/template-attribute-directive-instance';
-import { toSnakeCase } from './lib/utility';
+import { toSnakeCase, attribute_directive_id_name } from './lib/utility';
 
 Template.onCreated(function() {
     this.$$attributeDirectivesHash = {};
@@ -27,10 +27,10 @@ Template.onRenderedFirst(function() {
         let directiveNameSnakeCase = toSnakeCase(directiveType.name);  // Assumed that directiveType.name is camelCase.
         let $element = this.$(`[${directiveNameSnakeCase}]`);
         if ($element.length) {
-            let attribute_directive_id = $element.attr('uid');
+            let attribute_directive_id = $element.attr(attribute_directive_id_name);
             if (!attribute_directive_id) {
                 attribute_directive_id = _.uniqueId();
-                $element.attr('uid', attribute_directive_id);
+                $element.attr(attribute_directive_id_name, attribute_directive_id);
             }
 
             let directiveInstance = directiveType._instances[attribute_directive_id];
@@ -61,7 +61,7 @@ Template.onRenderedFirst(function() {
 
     $(this).on('$preLink', function() {
         this.forEachAttributeDirective(d => {
-            let $element = $(`[uid="${d.id}"]`);
+            let $element = $(`[${attribute_directive_id_name}="${d.id}"]`);
             let $attrs = d.$attrs();
             d.type.$preLink.call(d, d.$scope, $element, $attrs);
         });
@@ -69,7 +69,7 @@ Template.onRenderedFirst(function() {
 
     $(this).on('$postLink', function() {
         this.forEachAttributeDirective(d => {
-            let $element = $(`[uid="${d.id}"]`);
+            let $element = $(`[${attribute_directive_id_name}="${d.id}"]`);
             let $attrs = d.$attrs();
             d.type.$postLink.call(d, d.$scope, $element, $attrs);
         });
