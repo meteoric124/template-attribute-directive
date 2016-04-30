@@ -11,7 +11,7 @@ Package.describe({
 });
 
 var package_client_dependencies = [
-  "jandres:template-scope@=0.1.0-beta.3",
+  "meteoric124:template-scope@=0.1.0-beta.4",
   'underscore',
   'templating',
   'jquery'
@@ -47,6 +47,6 @@ Package.onTest(function(api) {
   api.addFiles([
     'tests/templates.html',
     'tests/template-attribute-directive-type.test.js',
-    'tests/template-attribute-directive-tests.js'
+    'tests/template-attribute-directive.test.js'
   ], 'client');
 });

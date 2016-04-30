@@ -33,3 +33,11 @@
         {{> SingleTemplate2}}
     </div>
 </template>
+
+<template name="MultipleAttributeDirective">
+    <div directive-one="2016 Formula1 season have started"
+         directive-two="I really hope Kimi Raikkonnen wins. The cool fin.">
+        <!-- sanity check by having some template as content. -->
+        {{> SingleTemplate1}}
+    </div>
+</template>
